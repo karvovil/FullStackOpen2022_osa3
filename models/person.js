@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+/*global process*/
 require('dotenv').config()
 const mongoose = require('mongoose')
 
@@ -13,15 +15,18 @@ mongoose.connect(url)
   })
 
 const personSchema = new mongoose.Schema({
-  name: {    
+  name: {
     type: String,
     minlength: 3,
     required: true
   },
-  number: {    
+  number: {
     type: String,
-    minlength: 3,
-    required: true
+    minlength: 8,
+    required: true,
+    validate: {
+      validator: v => /\d{2,}-\d{5,}/.test(v)
+    }
   }
 })
 
